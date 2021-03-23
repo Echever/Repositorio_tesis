@@ -1,0 +1,48 @@
+{
+    "TouchCubeMoveGail": {
+        "checkpoints": [
+            {
+                "steps": 8499951,
+                "file_path": "results\\move_random_1\\TouchCubeMoveGail\\TouchCubeMoveGail-8499951.onnx",
+                "reward": -0.6565242784949932,
+                "creation_time": 1615872987.5063646
+            },
+            {
+                "steps": 8999992,
+                "file_path": "results\\move_random_1\\TouchCubeMoveGail\\TouchCubeMoveGail-8999992.onnx",
+                "reward": -0.5974834854458715,
+                "creation_time": 1615874351.8561099
+            },
+            {
+                "steps": 9499990,
+                "file_path": "results\\move_random_1\\TouchCubeMoveGail\\TouchCubeMoveGail-9499990.onnx",
+                "reward": -0.6694999676484328,
+                "creation_time": 1615875717.886121
+            },
+            {
+                "steps": 9999995,
+                "file_path": "results\\move_random_1\\TouchCubeMoveGail\\TouchCubeMoveGail-9999995.onnx",
+                "reward": -0.8316763161814639,
+                "creation_time": 1615877075.1273074
+            },
+            {
+                "steps": 10000059,
+                "file_path": "results\\move_random_1\\TouchCubeMoveGail\\TouchCubeMoveGail-10000059.onnx",
+                "reward": -0.8316763161814639,
+                "creation_time": 1615877075.5228074
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 10000059,
+            "file_path": "results\\move_random_1\\TouchCubeMoveGail.onnx",
+            "reward": -0.8316763161814639,
+            "creation_time": 1615877075.5228074
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.23.0",
+        "torch_version": "1.7.1+cu110",
+        "tensorflow_version": -1
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "TouchCube": {
+        "checkpoints": [
+            {
+                "steps": 193,
+                "file_path": "results\\touch_test\\TouchCube\\TouchCube-193.onnx",
+                "reward": -1.0,
+                "creation_time": 1614783071.5422873
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 193,
+            "file_path": "results\\touch_test\\TouchCube.onnx",
+            "reward": -1.0,
+            "creation_time": 1614783071.5422873
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.23.0",
+        "torch_version": "1.7.1+cu110",
+        "tensorflow_version": -1
+    }
+}

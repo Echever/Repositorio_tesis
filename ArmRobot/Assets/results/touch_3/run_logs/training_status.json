@@ -1,0 +1,48 @@
+{
+    "TouchCube": {
+        "checkpoints": [
+            {
+                "steps": 499997,
+                "file_path": "results\\touch_3\\TouchCube\\TouchCube-499997.onnx",
+                "reward": -0.7727913069448876,
+                "creation_time": 1614684296.935357
+            },
+            {
+                "steps": 999998,
+                "file_path": "results\\touch_3\\TouchCube\\TouchCube-999998.onnx",
+                "reward": -1.1094781756401062,
+                "creation_time": 1614686029.760867
+            },
+            {
+                "steps": 1499998,
+                "file_path": "results\\touch_3\\TouchCube\\TouchCube-1499998.onnx",
+                "reward": -0.8279760187132317,
+                "creation_time": 1614687756.7011836
+            },
+            {
+                "steps": 1999998,
+                "file_path": "results\\touch_3\\TouchCube\\TouchCube-1999998.onnx",
+                "reward": -0.8567751876769527,
+                "creation_time": 1614689464.0241923
+            },
+            {
+                "steps": 2314780,
+                "file_path": "results\\touch_3\\TouchCube\\TouchCube-2314780.onnx",
+                "reward": -0.7682268206989922,
+                "creation_time": 1614764584.356031
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2314780,
+            "file_path": "results\\touch_3\\TouchCube.onnx",
+            "reward": -0.7682268206989922,
+            "creation_time": 1614764584.356031
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.23.0",
+        "torch_version": "1.7.1+cu110",
+        "tensorflow_version": -1
+    }
+}

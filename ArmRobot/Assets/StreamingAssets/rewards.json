@@ -1,0 +1,10 @@
+{
+   "randomBox":false,
+   "randomCube":false,
+   "rewardGrip":2,
+   "rewardReleaseInArea":3,
+   "rewardFinish":1,
+   "rewardCubeKnockedOff":-1,
+   "rewardCubeReleased":-1,
+   "rewardTime":-1
+}

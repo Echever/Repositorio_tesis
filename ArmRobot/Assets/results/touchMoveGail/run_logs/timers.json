@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1614789805",
+        "python_version": "3.7.9 (tags/v3.7.9:13c94747c7, Aug 17 2020, 18:58:18) [MSC v.1900 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\ahrPo\\AppData\\Local\\Programs\\Python\\Python37\\Scripts\\mlagents-learn Config\\Gail.yaml --run-id=touchMoveGail --force",
+        "mlagents_version": "0.23.0",
+        "mlagents_envs_version": "0.23.0",
+        "communication_protocol_version": "1.3.0",
+        "pytorch_version": "1.7.1+cu110",
+        "numpy_version": "1.18.5",
+        "end_time_seconds": "1614789867"
+    },
+    "total": 61.4127754,
+    "count": 1,
+    "self": 0.007053700000000163,
+    "children": {
+        "run_training.setup": {
+            "total": 0.009614099999999848,
+            "count": 1,
+            "self": 0.009614099999999848
+        },
+        "TrainerController.start_learning": {
+            "total": 61.3961076,
+            "count": 1,
+            "self": 0.00014939999999796783,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 61.3956577,
+                    "count": 1,
+                    "self": 61.3956577
+                },
+                "TrainerController._save_models": {
+                    "total": 0.00030050000000159116,
+                    "count": 1,
+                    "self": 0.00030050000000159116
+                }
+            }
+        }
+    }
+}

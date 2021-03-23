@@ -1,0 +1,42 @@
+{
+    "TouchCubeMoveGail": {
+        "checkpoints": [
+            {
+                "steps": 4999949,
+                "file_path": "results\\Test2\\TouchCubeMoveGail\\TouchCubeMoveGail-4999949.onnx",
+                "reward": -0.04999999888241291,
+                "creation_time": 1615177662.041866
+            },
+            {
+                "steps": 5499954,
+                "file_path": "results\\Test2\\TouchCubeMoveGail\\TouchCubeMoveGail-5499954.onnx",
+                "reward": 0.159000001847744,
+                "creation_time": 1615179483.510467
+            },
+            {
+                "steps": 5999983,
+                "file_path": "results\\Test2\\TouchCubeMoveGail\\TouchCubeMoveGail-5999983.onnx",
+                "reward": -0.14844444476895863,
+                "creation_time": 1615181290.9005435
+            },
+            {
+                "steps": 6499990,
+                "file_path": "results\\Test2\\TouchCubeMoveGail\\TouchCubeMoveGail-6499990.onnx",
+                "reward": null,
+                "creation_time": 1615183090.3285563
+            },
+            {
+                "steps": 6999973,
+                "file_path": "results\\Test2\\TouchCubeMoveGail\\TouchCubeMoveGail-6999973.onnx",
+                "reward": -0.2876249901019037,
+                "creation_time": 1615184813.5887277
+            }
+        ]
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.23.0",
+        "torch_version": "1.7.1+cu110",
+        "tensorflow_version": -1
+    }
+}
