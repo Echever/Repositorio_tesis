@@ -3,12 +3,12 @@ behaviors:
   TouchCubeMoveGail:
     trainer_type: ppo
     hyperparameters:
-      batch_size: 256
-      buffer_size: 1024
+      batch_size: 1024
+      buffer_size: 10240
       learning_rate: 0.0003
-      beta: 0.0005
+      beta: 0.005
       epsilon: 0.2
-      lambd: 0.99
+      lambd: 0.95
       num_epoch: 3
       learning_rate_schedule: linear
     network_settings:
@@ -21,14 +21,6 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-      gail:
-        gamma: 0.99
-        strength: 0.5
-        encoding_size: 64
-        learning_rate: 0.0003
-        use_actions: false
-        use_vail: false
-        demo_path: Demos/PincherDemo3.demo
     init_path: null
     keep_checkpoints: 5
     checkpoint_interval: 500000
@@ -37,13 +29,7 @@ behaviors:
     summary_freq: 20000
     threaded: true
     self_play: null
-    behavioral_cloning:
-      demo_path: Demos/PincherDemo3.demo
-      steps: 0
-      strength: 0.5
-      samples_per_update: 0
-      num_epoch: null
-      batch_size: null
+    behavioral_cloning: null
     framework: pytorch
 env_settings:
   env_path: null
@@ -59,13 +45,85 @@ engine_settings:
   target_frame_rate: -1
   capture_frame_rate: 60
   no_graphics: false
-environment_parameters: null
+environment_parameters:
+  randomBox:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 3962
+          value: 0
+      name: randomBox
+      completion_criteria: null
+  randomCube:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 3963
+          value: 1
+      name: randomCube
+      completion_criteria: null
+  rewardGrip:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 3964
+          value: 2
+      name: rewardGrip
+      completion_criteria: null
+  rewardReleaseInArea:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 3965
+          value: 3
+      name: rewardReleaseInArea
+      completion_criteria: null
+  rewardFinish:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 3966
+          value: 1
+      name: rewardFinish
+      completion_criteria: null
+  rewardCubeKnockedOff:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 3967
+          value: -1
+      name: rewardCubeKnockedOff
+      completion_criteria: null
+  rewardCubeReleased:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 3968
+          value: -1
+      name: rewardCubeReleased
+      completion_criteria: null
+  rewardTime:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 3969
+          value: -1
+      name: rewardTime
+      completion_criteria: null
 checkpoint_settings:
-  run_id: Test
+  run_id: test
   initialize_from: null
   load_model: false
-  resume: true
-  force: false
+  resume: false
+  force: true
   train_model: false
   inference: false
 debug: false

@@ -35,4 +35,15 @@ behaviors:
         keep_checkpoints: 5
         checkpoint_interval: 500000
         threaded: true
+environment_parameters:
+    # 0 = false, 1 = true
+    randomBox: 0
+    randomCube: 1
+    # Recompensas de las diferentes acciones
+    rewardGrip: 2
+    rewardReleaseInArea: 3
+    rewardFinish: 1
+    rewardCubeKnockedOff: -1
+    rewardCubeReleased: -1
+    rewardTime: -1
         

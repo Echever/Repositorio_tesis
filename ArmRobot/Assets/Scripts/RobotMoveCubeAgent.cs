@@ -36,7 +36,8 @@ public class RobotMoveCubeAgent : Agent
     public void Awake()
     {
 
-        path = Application.dataPath + "/StreamingAssets";
+        /*
+         * path = Application.dataPath + "/StreamingAssets";
 
         if (File.Exists(path + "/rewards.json"))
         {
@@ -56,8 +57,34 @@ public class RobotMoveCubeAgent : Agent
 
             Debug.Log(jsonRewardString);
         }
+        */
 
-        
+        if(Academy.Instance.EnvironmentParameters.GetWithDefault("randomBox", 0) != 0f)
+        {
+            rewards.randomBox = false;
+        }
+        else
+        {
+            rewards.randomBox = true;
+        }
+
+        if (Academy.Instance.EnvironmentParameters.GetWithDefault("randomCube", 0) != 0f)
+        {
+            rewards.randomCube = false;
+        }
+        else
+        {
+            rewards.randomCube = true;
+        }
+
+        rewards.rewardGrip = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardGrip", 0);
+        rewards.rewardReleaseInArea = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardReleaseInArea", 0);
+        rewards.rewardFinish = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardFinish", 0);
+        rewards.rewardCubeKnockedOff = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardFinish", 0);
+        rewards.rewardCubeReleased = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardCubeReleased", 0);
+        rewards.rewardCubeReleased = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardTime", 0);
+
+
         robotController = robot.GetComponent<RobotController>();
         touchDetector = cube.GetComponent<TargetTouchDetector>();
         tableTouchDetector = table.GetComponent<TableTouchDetector>();
@@ -91,7 +118,7 @@ public class RobotMoveCubeAgent : Agent
 
         if (rewards.randomCube)
         {
-            new Vector3(Random.Range(0.30f, 0.65f), cube.transform.localPosition.y, Random.Range(-0.25f, 0.26f));
+            cube.transform.localPosition = new Vector3(Random.Range(0.30f, 0.65f), cube.transform.localPosition.y, Random.Range(-0.25f, 0.26f));
         }
         else
         {
@@ -201,12 +228,14 @@ public class RobotMoveCubeAgent : Agent
             EndEpisode();
         }
 
-        //knocked the cube from starting position
+        //knocked the cube from starting position (Si el cubo es aleatorio esto no hace falta)
+        /*
         if ((cube.transform.localPosition.z < -0.1f || cube.transform.localPosition.z > 0.1f || cube.transform.localPosition.x < 0.4f || cube.transform.localPosition.x > 0.53f) && !cubeIsGripped)
         {
             SetReward(rewards.rewardCubeKnockedOff);
             EndEpisode();
         }
+        */
 
         float lowX = goalBox.transform.localPosition.x - (goal.GetComponent<MeshRenderer>().bounds.size.x / 2);
         float upX = goalBox.transform.localPosition.x + (goal.GetComponent<MeshRenderer>().bounds.size.x / 2);
