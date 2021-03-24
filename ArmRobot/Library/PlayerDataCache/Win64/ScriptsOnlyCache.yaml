@@ -606,4 +606,4 @@ ScriptsOnlyBuild:
   platform: 19
   scenePathNames:
   - Assets/Scenes/RobotMover.unity
-  playerPath: C:/Users/ahrPo/OneDrive/Desktop/ml-agents-release_12/articulations-robot-demo-mlagents/ArmRobot/Build/ArmRobot.exe
+  playerPath: C:/Users/ahrPo/OneDrive/Documentos/GitHub/Repositorio_tesis/ArmRobot/Build/ArmRobot.exe

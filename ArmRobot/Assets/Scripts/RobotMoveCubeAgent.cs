@@ -37,7 +37,7 @@ public class RobotMoveCubeAgent : Agent
     {
 
         /*
-         * path = Application.dataPath + "/StreamingAssets";
+        path = Application.dataPath + "/StreamingAssets";
 
         if (File.Exists(path + "/rewards.json"))
         {
@@ -59,7 +59,8 @@ public class RobotMoveCubeAgent : Agent
         }
         */
 
-        if(Academy.Instance.EnvironmentParameters.GetWithDefault("randomBox", 0) != 0f)
+        
+        if(Academy.Instance.EnvironmentParameters.GetWithDefault("randomBox", 0) == 0f)
         {
             rewards.randomBox = false;
         }
@@ -68,7 +69,7 @@ public class RobotMoveCubeAgent : Agent
             rewards.randomBox = true;
         }
 
-        if (Academy.Instance.EnvironmentParameters.GetWithDefault("randomCube", 0) != 0f)
+        if (Academy.Instance.EnvironmentParameters.GetWithDefault("randomCube", 0) == 0f)
         {
             rewards.randomCube = false;
         }
@@ -83,7 +84,7 @@ public class RobotMoveCubeAgent : Agent
         rewards.rewardCubeKnockedOff = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardFinish", 0);
         rewards.rewardCubeReleased = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardCubeReleased", 0);
         rewards.rewardCubeReleased = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardTime", 0);
-
+        
 
         robotController = robot.GetComponent<RobotController>();
         touchDetector = cube.GetComponent<TargetTouchDetector>();

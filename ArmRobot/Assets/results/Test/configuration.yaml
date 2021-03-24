@@ -32,14 +32,14 @@ behaviors:
     behavioral_cloning: null
     framework: pytorch
 env_settings:
-  env_path: null
+  env_path: ..\Build
   env_args: null
   base_port: 5005
-  num_envs: 1
+  num_envs: 2
   seed: -1
 engine_settings:
-  width: 84
-  height: 84
+  width: 500
+  height: 500
   quality_level: 5
   time_scale: 20
   target_frame_rate: -1
@@ -51,7 +51,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3962
+          seed: 178
           value: 0
       name: randomBox
       completion_criteria: null
@@ -60,7 +60,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3963
+          seed: 179
           value: 1
       name: randomCube
       completion_criteria: null
@@ -69,7 +69,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3964
+          seed: 180
           value: 2
       name: rewardGrip
       completion_criteria: null
@@ -78,7 +78,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3965
+          seed: 181
           value: 3
       name: rewardReleaseInArea
       completion_criteria: null
@@ -87,7 +87,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3966
+          seed: 182
           value: 1
       name: rewardFinish
       completion_criteria: null
@@ -96,7 +96,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3967
+          seed: 183
           value: -1
       name: rewardCubeKnockedOff
       completion_criteria: null
@@ -105,7 +105,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3968
+          seed: 184
           value: -1
       name: rewardCubeReleased
       completion_criteria: null
@@ -114,8 +114,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3969
-          value: -1
+          seed: 185
+          value: -100
       name: rewardTime
       completion_criteria: null
 checkpoint_settings:

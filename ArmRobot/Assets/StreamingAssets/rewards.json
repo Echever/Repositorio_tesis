@@ -1,6 +1,6 @@
 {
    "randomBox":false,
-   "randomCube":false,
+   "randomCube":true,
    "rewardGrip":2,
    "rewardReleaseInArea":3,
    "rewardFinish":1,

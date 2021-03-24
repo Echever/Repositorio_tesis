@@ -23,22 +23,6 @@
     "rewardTime": {
         "lesson_num": 0
     },
-    "TouchCubeMoveGail": {
-        "checkpoints": [
-            {
-                "steps": 18760,
-                "file_path": "results\\test\\TouchCubeMoveGail\\TouchCubeMoveGail-18760.onnx",
-                "reward": -0.21241817636923357,
-                "creation_time": 1616587372.9734523
-            }
-        ],
-        "final_checkpoint": {
-            "steps": 18760,
-            "file_path": "results\\test\\TouchCubeMoveGail.onnx",
-            "reward": -0.21241817636923357,
-            "creation_time": 1616587372.9734523
-        }
-    },
     "metadata": {
         "stats_format_version": "0.2.0",
         "mlagents_version": "0.23.0",

@@ -1,9 +1,9 @@
 {
    "randomBox":false,
-   "randomCube":false,
-   "rewardGrip":0.5,
-   "rewardReleaseInArea":0.5,
-   "rewardFinish":0.5,
+   "randomCube":true,
+   "rewardGrip":2,
+   "rewardReleaseInArea":3,
+   "rewardFinish":1,
    "rewardCubeKnockedOff":-1,
    "rewardCubeReleased":-1,
    "rewardTime":-1
