@@ -24,7 +24,7 @@ behaviors:
     init_path: null
     keep_checkpoints: 5
     checkpoint_interval: 500000
-    max_steps: 10000000
+    max_steps: 20000000
     time_horizon: 64
     summary_freq: 20000
     threaded: true
@@ -35,11 +35,11 @@ env_settings:
   env_path: ..\Build
   env_args: null
   base_port: 5005
-  num_envs: 2
+  num_envs: 4
   seed: -1
 engine_settings:
-  width: 500
-  height: 500
+  width: 84
+  height: 84
   quality_level: 5
   time_scale: 20
   target_frame_rate: -1
@@ -51,7 +51,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 178
+          seed: 4015
           value: 0
       name: randomBox
       completion_criteria: null
@@ -60,7 +60,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 179
+          seed: 4016
           value: 1
       name: randomCube
       completion_criteria: null
@@ -69,7 +69,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 180
+          seed: 4017
           value: 2
       name: rewardGrip
       completion_criteria: null
@@ -78,7 +78,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 181
+          seed: 4018
           value: 3
       name: rewardReleaseInArea
       completion_criteria: null
@@ -87,7 +87,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 182
+          seed: 4019
           value: 1
       name: rewardFinish
       completion_criteria: null
@@ -96,7 +96,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 183
+          seed: 4020
           value: -1
       name: rewardCubeKnockedOff
       completion_criteria: null
@@ -105,7 +105,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 184
+          seed: 4021
           value: -1
       name: rewardCubeReleased
       completion_criteria: null
@@ -114,16 +114,16 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 185
-          value: -100
+          seed: 4022
+          value: -1
       name: rewardTime
       completion_criteria: null
 checkpoint_settings:
   run_id: test
   initialize_from: null
   load_model: false
-  resume: false
-  force: true
+  resume: true
+  force: false
   train_model: false
   inference: false
 debug: false

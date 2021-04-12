@@ -1,0 +1,66 @@
+{
+    "randomBox": {
+        "lesson_num": 0
+    },
+    "randomCube": {
+        "lesson_num": 0
+    },
+    "rewardGrip": {
+        "lesson_num": 0
+    },
+    "rewardReleaseInArea": {
+        "lesson_num": 0
+    },
+    "rewardFinish": {
+        "lesson_num": 0
+    },
+    "rewardCubeKnockedOff": {
+        "lesson_num": 0
+    },
+    "rewardCubeReleased": {
+        "lesson_num": 0
+    },
+    "rewardTime": {
+        "lesson_num": 0
+    },
+    "TouchCubeMoveGail": {
+        "checkpoints": [
+            {
+                "steps": 2999990,
+                "file_path": "results\\gripCorrected\\TouchCubeMoveGail\\TouchCubeMoveGail-2999990.onnx",
+                "reward": -0.8452768945185566,
+                "creation_time": 1616879460.6215017
+            },
+            {
+                "steps": 3499999,
+                "file_path": "results\\gripCorrected\\TouchCubeMoveGail\\TouchCubeMoveGail-3499999.onnx",
+                "reward": -0.8433175725824167,
+                "creation_time": 1616881671.9199579
+            },
+            {
+                "steps": 3999994,
+                "file_path": "results\\gripCorrected\\TouchCubeMoveGail\\TouchCubeMoveGail-3999994.onnx",
+                "reward": -0.7827541612640992,
+                "creation_time": 1616883887.0505095
+            },
+            {
+                "steps": 4499999,
+                "file_path": "results\\gripCorrected\\TouchCubeMoveGail\\TouchCubeMoveGail-4499999.onnx",
+                "reward": -0.7160169894544823,
+                "creation_time": 1616886056.9603782
+            },
+            {
+                "steps": 4999986,
+                "file_path": "results\\gripCorrected\\TouchCubeMoveGail\\TouchCubeMoveGail-4999986.onnx",
+                "reward": -0.7880328820644849,
+                "creation_time": 1616888219.5772712
+            }
+        ]
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.23.0",
+        "torch_version": "1.7.1+cu110",
+        "tensorflow_version": "2.4.1"
+    }
+}

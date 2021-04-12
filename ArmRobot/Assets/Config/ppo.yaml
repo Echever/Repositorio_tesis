@@ -29,7 +29,7 @@ behaviors:
         #behavioral_cloning:
         #    strength: 0.5
         #    demo_path: Demos/PincherDemoD.demo
-        max_steps: 10000000
+        max_steps: 100000000
         time_horizon: 64
         summary_freq: 20000
         keep_checkpoints: 5
@@ -41,9 +41,39 @@ environment_parameters:
     randomCube: 1
     # Recompensas de las diferentes acciones
     rewardGrip: 2
-    rewardReleaseInArea: 3
+    rewardReleaseInArea: 4
     rewardFinish: 1
     rewardCubeKnockedOff: -1
     rewardCubeReleased: -1
     rewardTime: -1
+    curriculumGrip:
+        curriculum:
+            - name: GripLesson1
+              completion_criteria: 
+                measure: progress
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 100
+                threshold: 0.1
+              value: 1
+            - name: GripLesson2
+              completion_criteria: 
+                measure: progress
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 500
+                threshold: 0.3
+              value: 2
+            - name: GripLesson3
+              completion_criteria: 
+                measure: progress
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 500
+                threshold: 0.6
+              value: 3
+            - name: GripLessonFinal
+              value: 0
+            
+            
         

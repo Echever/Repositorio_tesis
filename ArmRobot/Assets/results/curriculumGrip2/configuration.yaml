@@ -1,0 +1,177 @@
+default_settings: null
+behaviors:
+  TouchCubeMoveGail:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 1024
+      buffer_size: 10240
+      learning_rate: 0.0003
+      beta: 0.005
+      epsilon: 0.2
+      lambd: 0.95
+      num_epoch: 3
+      learning_rate_schedule: linear
+    network_settings:
+      normalize: false
+      hidden_units: 128
+      num_layers: 2
+      vis_encode_type: simple
+      memory: null
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+    init_path: null
+    keep_checkpoints: 5
+    checkpoint_interval: 500000
+    max_steps: 40000000
+    time_horizon: 64
+    summary_freq: 20000
+    threaded: true
+    self_play: null
+    behavioral_cloning: null
+    framework: pytorch
+env_settings:
+  env_path: null
+  env_args: null
+  base_port: 5005
+  num_envs: 1
+  seed: -1
+engine_settings:
+  width: 84
+  height: 84
+  quality_level: 5
+  time_scale: 20
+  target_frame_rate: -1
+  capture_frame_rate: 60
+  no_graphics: false
+environment_parameters:
+  randomBox:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7424
+          value: 0
+      name: randomBox
+      completion_criteria: null
+  randomCube:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7425
+          value: 0
+      name: randomCube
+      completion_criteria: null
+  rewardGrip:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7426
+          value: 2
+      name: rewardGrip
+      completion_criteria: null
+  rewardReleaseInArea:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7427
+          value: 4
+      name: rewardReleaseInArea
+      completion_criteria: null
+  rewardFinish:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7428
+          value: 1
+      name: rewardFinish
+      completion_criteria: null
+  rewardCubeKnockedOff:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7429
+          value: -1
+      name: rewardCubeKnockedOff
+      completion_criteria: null
+  rewardCubeReleased:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7430
+          value: -1
+      name: rewardCubeReleased
+      completion_criteria: null
+  rewardTime:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7431
+          value: -1
+      name: rewardTime
+      completion_criteria: null
+  curriculumGrip:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7432
+          value: 1
+      name: GripLesson1
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: progress
+        min_lesson_length: 100
+        signal_smoothing: true
+        threshold: 0.1
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7433
+          value: 2
+      name: GripLesson2
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: progress
+        min_lesson_length: 500
+        signal_smoothing: true
+        threshold: 0.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7434
+          value: 3
+      name: GripLesson3
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: progress
+        min_lesson_length: 500
+        signal_smoothing: true
+        threshold: 0.4
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 7435
+          value: 0
+      name: GripLessonFinal
+      completion_criteria: null
+checkpoint_settings:
+  run_id: curriculumGrip2
+  initialize_from: null
+  load_model: false
+  resume: false
+  force: true
+  train_model: false
+  inference: false
+debug: false

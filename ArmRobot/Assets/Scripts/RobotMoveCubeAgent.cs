@@ -31,6 +31,8 @@ public class RobotMoveCubeAgent : Agent
 
     private SaveRewards rewards = new SaveRewards();
 
+    private Vector3 cubeStartingpos;
+
     private String path;
 
     public void Awake()
@@ -81,9 +83,9 @@ public class RobotMoveCubeAgent : Agent
         rewards.rewardGrip = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardGrip", 0);
         rewards.rewardReleaseInArea = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardReleaseInArea", 0);
         rewards.rewardFinish = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardFinish", 0);
-        rewards.rewardCubeKnockedOff = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardFinish", 0);
+        rewards.rewardCubeKnockedOff = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardCubeKnockedOff", 0);
         rewards.rewardCubeReleased = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardCubeReleased", 0);
-        rewards.rewardCubeReleased = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardTime", 0);
+        rewards.rewardTime = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardTime", 0);
         
 
         robotController = robot.GetComponent<RobotController>();
@@ -99,7 +101,7 @@ public class RobotMoveCubeAgent : Agent
     public override void OnEpisodeBegin()
     {
 
-
+        Debug.Log("RESET");
         if (rewards.randomBox)
         {
             goalBox.transform.localPosition = new Vector3(Random.Range(-0.70f, -0.33f), goalBox.transform.localPosition.y, Random.Range(-0.25f, 0.26f));
@@ -117,15 +119,31 @@ public class RobotMoveCubeAgent : Agent
         touchDetector.hasTouchedTarget = false;
         tableTouchDetector.hasTouchedTable = false;
 
+        //Aleatorizacion de la pieza
         if (rewards.randomCube)
         {
-            cube.transform.localPosition = new Vector3(Random.Range(0.30f, 0.65f), cube.transform.localPosition.y, Random.Range(-0.25f, 0.26f));
+            if (Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) == 1)
+            {
+                cubeStartingpos = new Vector3(Random.Range(0.473f, 0.485f), 0.778f, Random.Range(-0.05f, -0.04f));
+            }
+            else if (Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) == 2)
+            {
+                cubeStartingpos = new Vector3(Random.Range(0.44f, 0.50f), 0.778f, Random.Range(-0.07f, 0.03f));
+            }
+            else if (Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) == 3 || Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) == 0)
+            {
+                cubeStartingpos = new Vector3(Random.Range(0.42f, 0.52f), 0.778f, Random.Range(-0.10f, 0.8f));
+            }
         }
         else
         {
-            cube.transform.localPosition = new Vector3(0.472f, 0.778f, -0.0396f);
-        
+            cubeStartingpos = new Vector3(0.472f, 0.778f, -0.0396f);
         }
+
+        cube.transform.localPosition = cubeStartingpos;
+
+        
+
         cube.transform.localRotation = Quaternion.Euler(0, 0, 0);
         cube.GetComponent<Rigidbody>().velocity = Vector3.zero;
         
@@ -210,13 +228,22 @@ public class RobotMoveCubeAgent : Agent
         PincherController pincherController = endEffector.GetComponent<PincherController>();
         pincherController.gripState = GripStateForInput(input - 1);
 
+        //Debug.Log(endEffector.GetComponent<PincherController>().CurrentGraspCenter().ToString("F4"));
 
-        
-        if (pincherController.grip > 0.5f && pincherController.fingerA.GetComponent<FingerTouch>().isTouchingCube && pincherController.fingerB.GetComponent<FingerTouch>().isTouchingCube && cube.transform.localPosition.y > 0.8f && !cubeIsGripped)
+        //if (cube.GetComponent<Collider>().bounds.Contains(endEffector.GetComponent<PincherController>().CurrentGraspCenter()) && pincherController.grip > 0.5f && pincherController.fingerA.GetComponent<FingerTouch>().isTouchingCube && pincherController.fingerB.GetComponent<FingerTouch>().isTouchingCube && cube.transform.localPosition.y > 0.8f && !cubeIsGripped)
+
+        if (cube.GetComponent<Collider>().bounds.Contains(endEffector.GetComponent<PincherController>().CurrentGraspCenter()) && pincherController.grip > 0.5f && pincherController.fingerA.GetComponent<FingerTouch>().isTouchingCube && pincherController.fingerB.GetComponent<FingerTouch>().isTouchingCube && cube.transform.localPosition.y > 0.8f && !cubeIsGripped)
         {
             cubeIsGripped = true;
             Debug.Log("Cube Gripped");
-            SetReward(rewards.rewardGrip);
+            AddReward(rewards.rewardGrip);
+
+            //Si tenemos el curriculum activado esto va a hacer que al principio solo aprenda a agarrar el cubo, una vez pase de un cierto punto avanzará en el entrenamiento.
+            if(Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) != 0)
+            {
+                Debug.Log("Estamos en curriculum, asi que reseteamos!");
+                EndEpisode();
+            }
         }
 
         
@@ -225,18 +252,19 @@ public class RobotMoveCubeAgent : Agent
         // Knocked the cube off the table
         if (cube.transform.position.y < 0.6f || cube.transform.localPosition.z < -0.9f || cube.transform.localPosition.z > 0.955f || cube.transform.localPosition.x < -0.92f || cube.transform.localPosition.x > 0.92f)
         {
-            SetReward(rewards.rewardCubeKnockedOff);
+            AddReward(rewards.rewardCubeKnockedOff);
             EndEpisode();
         }
 
         //knocked the cube from starting position (Si el cubo es aleatorio esto no hace falta)
-        /*
-        if ((cube.transform.localPosition.z < -0.1f || cube.transform.localPosition.z > 0.1f || cube.transform.localPosition.x < 0.4f || cube.transform.localPosition.x > 0.53f) && !cubeIsGripped)
+        if ((cube.transform.localPosition.z < (cubeStartingpos.z - 0.1f) || cube.transform.localPosition.z > (cubeStartingpos.z + 0.1f) || cube.transform.localPosition.x < (cubeStartingpos.x  - 0.1) || cube.transform.localPosition.x > (cubeStartingpos.x + 0.1)) && !cubeIsGripped)
         {
-            SetReward(rewards.rewardCubeKnockedOff);
+            Debug.Log("Kocked off");
+            AddReward(rewards.rewardCubeKnockedOff);
             EndEpisode();
         }
-        */
+        
+        
 
         float lowX = goalBox.transform.localPosition.x - (goal.GetComponent<MeshRenderer>().bounds.size.x / 2);
         float upX = goalBox.transform.localPosition.x + (goal.GetComponent<MeshRenderer>().bounds.size.x / 2);
@@ -255,27 +283,26 @@ public class RobotMoveCubeAgent : Agent
         {
             Debug.Log("Cube released in the area! NUEVO");
             cubeIsReleased = true;
-            SetReward(rewards.rewardReleaseInArea);
+            AddReward(rewards.rewardReleaseInArea);
         }
 
 
         if (goal.GetComponent<Goal>().goal || cube.GetComponent<TargetTouchDetector>().hasTouchedTarget)
         {
             Debug.Log("Finished!");
-            SetReward(rewards.rewardFinish);
+            AddReward(rewards.rewardFinish);
             EndEpisode();
         }
       
 
         if (tableTouchDetector.hasTouchedTable)
         {
-            SetReward(rewards.rewardCubeReleased);
+            AddReward(rewards.rewardCubeReleased);
             EndEpisode();
         }
 
-
         AddReward(rewards.rewardTime / MaxStep);
-
+        
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)

@@ -47,8 +47,12 @@ public class PincherController : MonoBehaviour
         /* Gets the point directly between the middle of the pincher fingers,
          * in the global coordinate system.      
          */
+        
         Vector3 localCenterPoint = (fingerAController.GetOpenPosition() + fingerBController.GetOpenPosition()) / 2.0f;
-        Vector3 globalCenterPoint = transform.TransformPoint(localCenterPoint);
+        Vector3 loweredCenterPoint = localCenterPoint + new Vector3(0, +2.5f, 0);
+        Vector3 globalCenterPoint = transform.TransformPoint(loweredCenterPoint);
+
+        
         return globalCenterPoint;
     }
 

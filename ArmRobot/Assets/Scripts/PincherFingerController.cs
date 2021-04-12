@@ -8,6 +8,7 @@ public class PincherFingerController : MonoBehaviour
     public float closedZ; 
 
     Vector3 openPosition;
+    Vector3 pos;
     ArticulationBody articulation;
 
 
@@ -16,6 +17,7 @@ public class PincherFingerController : MonoBehaviour
     void Start()
     {
         openPosition = transform.localPosition;
+        pos = transform.position;
         articulation = GetComponent<ArticulationBody>();
         SetLimits();
     }
@@ -45,6 +47,11 @@ public class PincherFingerController : MonoBehaviour
     public Vector3 GetOpenPosition()
     {
         return openPosition;
+    }
+
+    public Vector3 GetPos()
+    {
+        return pos;
     }
 
     // CONTROL
