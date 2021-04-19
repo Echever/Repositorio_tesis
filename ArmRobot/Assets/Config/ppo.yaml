@@ -50,30 +50,152 @@ environment_parameters:
         curriculum:
             - name: GripLesson1
               completion_criteria: 
-                measure: progress
+                measure: reward
                 behavior: TouchCubeMoveGail
                 signal_smoothing: true
-                min_lesson_length: 100
-                threshold: 0.1
-              value: 1
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.01
             - name: GripLesson2
               completion_criteria: 
-                measure: progress
+                measure: reward
                 behavior: TouchCubeMoveGail
                 signal_smoothing: true
-                min_lesson_length: 500
-                threshold: 0.3
-              value: 2
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.02
             - name: GripLesson3
               completion_criteria: 
-                measure: progress
+                measure: reward
                 behavior: TouchCubeMoveGail
                 signal_smoothing: true
-                min_lesson_length: 500
-                threshold: 0.6
-              value: 3
-            - name: GripLessonFinal
-              value: 0
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.03
+            - name: GripLesson4
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.04
+            - name: GripLesson5
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.05
+            - name: GripLesson6
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.06
+            - name: GripLesson7
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.07
+            - name: GripLesson8
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.08
+            - name: GripLesson9
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.09
+            - name: GripLesson10
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.10
+            - name: GripLesson11
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.11
+            - name: GripLesson12
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.12
+            - name: GripLesson13
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.15
+            - name: GripLesson14
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.18
+            - name: GripLesson15
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.21
+            - name: GripLesson16
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.24
+            - name: GripLesson17
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.27
+            - name: GripLesson18
+              completion_criteria: 
+                measure: reward
+                behavior: TouchCubeMoveGail
+                signal_smoothing: true
+                min_lesson_length: 10000
+                threshold: 1.2
+              value: 0.30
+              
+              
+            
+
             
             
         

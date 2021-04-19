@@ -51,7 +51,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7536
+          seed: 4677
           value: 0
       name: randomBox
       completion_criteria: null
@@ -60,7 +60,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7537
+          seed: 4678
           value: 1
       name: randomCube
       completion_criteria: null
@@ -69,7 +69,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7538
+          seed: 4679
           value: 2
       name: rewardGrip
       completion_criteria: null
@@ -78,7 +78,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7539
+          seed: 4680
           value: 4
       name: rewardReleaseInArea
       completion_criteria: null
@@ -87,7 +87,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7540
+          seed: 4681
           value: 1
       name: rewardFinish
       completion_criteria: null
@@ -96,7 +96,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7541
+          seed: 4682
           value: -1
       name: rewardCubeKnockedOff
       completion_criteria: null
@@ -105,7 +105,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7542
+          seed: 4683
           value: -1
       name: rewardCubeReleased
       completion_criteria: null
@@ -114,7 +114,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7543
+          seed: 4684
           value: -1
       name: rewardTime
       completion_criteria: null
@@ -123,55 +123,55 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7544
-          value: 1
+          seed: 4685
+          value: 2
       name: GripLesson1
       completion_criteria:
         behavior: TouchCubeMoveGail
         measure: progress
-        min_lesson_length: 100
+        min_lesson_length: 5000
         signal_smoothing: true
         threshold: 0.1
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7545
+          seed: 4686
           value: 2
       name: GripLesson2
       completion_criteria:
         behavior: TouchCubeMoveGail
         measure: progress
-        min_lesson_length: 500
+        min_lesson_length: 5000
         signal_smoothing: true
-        threshold: 0.3
+        threshold: 0.4
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7546
+          seed: 4687
           value: 3
       name: GripLesson3
       completion_criteria:
         behavior: TouchCubeMoveGail
         measure: progress
-        min_lesson_length: 500
+        min_lesson_length: 5000
         signal_smoothing: true
-        threshold: 0.6
+        threshold: 0.5
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7547
-          value: 0
+          seed: 4688
+          value: 2
       name: GripLessonFinal
       completion_criteria: null
 checkpoint_settings:
   run_id: curriculum1
   initialize_from: null
   load_model: false
-  resume: false
-  force: true
+  resume: true
+  force: false
   train_model: false
   inference: false
 debug: false

@@ -29,6 +29,15 @@ public class RobotMoveCubeAgent : Agent
     bool cubeIsReleased = false;
     //TablePositionRandomizer tablePositionRandomizer;
 
+    [SerializeField]
+    bool cubeIsRandom = false;
+
+    [SerializeField]
+    float distanciaMaximaActual;
+
+    [SerializeField]
+    float distanciaMaximaAnterior = 0;
+
     private SaveRewards rewards = new SaveRewards();
 
     private Vector3 cubeStartingpos;
@@ -62,7 +71,7 @@ public class RobotMoveCubeAgent : Agent
         */
 
         
-        if(Academy.Instance.EnvironmentParameters.GetWithDefault("randomBox", 0) == 0f)
+        if(Academy.Instance.EnvironmentParameters.GetWithDefault("randomBox", 0) == 0)
         {
             rewards.randomBox = false;
         }
@@ -71,14 +80,16 @@ public class RobotMoveCubeAgent : Agent
             rewards.randomBox = true;
         }
 
-        if (Academy.Instance.EnvironmentParameters.GetWithDefault("randomCube", 0) == 0f)
+        if (Academy.Instance.EnvironmentParameters.GetWithDefault("randomCube", 0) == 0)
         {
-            rewards.randomCube = false;
+            cubeIsRandom = false;
         }
         else
         {
-            rewards.randomCube = true;
+            cubeIsRandom = true;
         }
+        
+        
 
         rewards.rewardGrip = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardGrip", 0);
         rewards.rewardReleaseInArea = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardReleaseInArea", 0);
@@ -100,8 +111,6 @@ public class RobotMoveCubeAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-
-        Debug.Log("RESET");
         if (rewards.randomBox)
         {
             goalBox.transform.localPosition = new Vector3(Random.Range(-0.70f, -0.33f), goalBox.transform.localPosition.y, Random.Range(-0.25f, 0.26f));
@@ -119,20 +128,27 @@ public class RobotMoveCubeAgent : Agent
         touchDetector.hasTouchedTarget = false;
         tableTouchDetector.hasTouchedTable = false;
 
+        Vector3 posicionIncialCubo = new Vector3(0.472f, 0.778f, -0.0396f);
+        distanciaMaximaActual = Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0.01f);
+
+       
+
+
         //Aleatorizacion de la pieza
-        if (rewards.randomCube)
+        if (cubeIsRandom)
         {
-            if (Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) == 1)
+            //Cambiar la generacion de la pieza 
+            if (Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) != 0)
             {
-                cubeStartingpos = new Vector3(Random.Range(0.473f, 0.485f), 0.778f, Random.Range(-0.05f, -0.04f));
-            }
-            else if (Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) == 2)
-            {
-                cubeStartingpos = new Vector3(Random.Range(0.44f, 0.50f), 0.778f, Random.Range(-0.07f, 0.03f));
-            }
-            else if (Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) == 3 || Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) == 0)
-            {
-                cubeStartingpos = new Vector3(Random.Range(0.42f, 0.52f), 0.778f, Random.Range(-0.10f, 0.8f));
+                //Si la distancia en X es mas que 0.18 el brazo no llega
+                if (distanciaMaximaActual > 0.18)
+                {
+                    cubeStartingpos = new Vector3(Random.Range(posicionIncialCubo.x - distanciaMaximaActual, posicionIncialCubo.x + 0.18f), posicionIncialCubo.y, Random.Range(posicionIncialCubo.z - distanciaMaximaActual, posicionIncialCubo.z + distanciaMaximaActual));
+                }
+                else
+                {
+                    cubeStartingpos = new Vector3(Random.Range((posicionIncialCubo.x - distanciaMaximaActual), posicionIncialCubo.x + distanciaMaximaActual), posicionIncialCubo.y, Random.Range(posicionIncialCubo.z - distanciaMaximaActual, posicionIncialCubo.z + distanciaMaximaActual));
+                }
             }
         }
         else
@@ -216,7 +232,7 @@ public class RobotMoveCubeAgent : Agent
 
     public override void OnActionReceived(float[] vectorAction)
     {
-        // move
+        // move RESTAMOS 2 POR QUE NO SON JOINTS
         for (int jointIndex = 0; jointIndex < vectorAction.Length - 1; jointIndex++)
         {
             RotationDirection rotationDirection = ActionIndexToRotationDirection((int)vectorAction[jointIndex]);
@@ -224,9 +240,13 @@ public class RobotMoveCubeAgent : Agent
         }
 
         //pincher
-        float input = (int) vectorAction[7];
-        PincherController pincherController = endEffector.GetComponent<PincherController>();
-        pincherController.gripState = GripStateForInput(input - 1);
+        float pincherInput = (int) vectorAction[7];
+        pincherController.gripState = GripStateForInput(pincherInput - 1);
+
+        /*
+        int handInput = (int) vectorAction[8];
+        robotController.RotateJoint(6, ActionIndexToRotationDirection(handInput), false);
+        */
 
         //Debug.Log(endEffector.GetComponent<PincherController>().CurrentGraspCenter().ToString("F4"));
 
@@ -236,7 +256,12 @@ public class RobotMoveCubeAgent : Agent
         {
             cubeIsGripped = true;
             Debug.Log("Cube Gripped");
-            AddReward(rewards.rewardGrip);
+            SetReward(rewards.rewardGrip);
+
+            if (cube.transform.localPosition.x > (cubeStartingpos.x + distanciaMaximaActual - 0.01) || cube.transform.localPosition.x < (cubeStartingpos.x - distanciaMaximaActual + 0.01) && cube.transform.localPosition.z > (cubeStartingpos.z + distanciaMaximaActual - 0.01) || cube.transform.localPosition.z < (cubeStartingpos.z - distanciaMaximaActual + 0.01))
+            {
+                Debug.Log("A");
+            }
 
             //Si tenemos el curriculum activado esto va a hacer que al principio solo aprenda a agarrar el cubo, una vez pase de un cierto punto avanzará en el entrenamiento.
             if(Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) != 0)
@@ -252,15 +277,14 @@ public class RobotMoveCubeAgent : Agent
         // Knocked the cube off the table
         if (cube.transform.position.y < 0.6f || cube.transform.localPosition.z < -0.9f || cube.transform.localPosition.z > 0.955f || cube.transform.localPosition.x < -0.92f || cube.transform.localPosition.x > 0.92f)
         {
-            AddReward(rewards.rewardCubeKnockedOff);
+            SetReward(rewards.rewardCubeKnockedOff);
             EndEpisode();
         }
 
         //knocked the cube from starting position (Si el cubo es aleatorio esto no hace falta)
         if ((cube.transform.localPosition.z < (cubeStartingpos.z - 0.1f) || cube.transform.localPosition.z > (cubeStartingpos.z + 0.1f) || cube.transform.localPosition.x < (cubeStartingpos.x  - 0.1) || cube.transform.localPosition.x > (cubeStartingpos.x + 0.1)) && !cubeIsGripped)
         {
-            Debug.Log("Kocked off");
-            AddReward(rewards.rewardCubeKnockedOff);
+            SetReward(rewards.rewardCubeKnockedOff);
             EndEpisode();
         }
         
@@ -283,21 +307,21 @@ public class RobotMoveCubeAgent : Agent
         {
             Debug.Log("Cube released in the area! NUEVO");
             cubeIsReleased = true;
-            AddReward(rewards.rewardReleaseInArea);
+            SetReward(rewards.rewardReleaseInArea);
         }
 
 
         if (goal.GetComponent<Goal>().goal || cube.GetComponent<TargetTouchDetector>().hasTouchedTarget)
         {
             Debug.Log("Finished!");
-            AddReward(rewards.rewardFinish);
+            SetReward(rewards.rewardFinish);
             EndEpisode();
         }
       
 
         if (tableTouchDetector.hasTouchedTable)
         {
-            AddReward(rewards.rewardCubeReleased);
+            SetReward(rewards.rewardCubeReleased);
             EndEpisode();
         }
 
@@ -327,12 +351,12 @@ public class RobotMoveCubeAgent : Agent
                     break;
             }
         }
-        robotController.StopAllJointRotations();
+       
 
-        float input = Input.GetAxis("Fingers");
-        Debug.Log(input + " " + Mathf.RoundToInt(input));
+        float pincherInput = Input.GetAxis("Fingers");
+        
 
-        switch (Mathf.RoundToInt(input))
+        switch (Mathf.RoundToInt(pincherInput))
         {
             case -1:
 
@@ -346,7 +370,8 @@ public class RobotMoveCubeAgent : Agent
                 discreteActions[7] = 0;
                 break;
         }
-        
+
+
 
     }
 
@@ -391,6 +416,22 @@ public class RobotMoveCubeAgent : Agent
         else
         {
             return GripState.Fixed;
+        }
+    }
+
+    static RotationDirection GetRotationDirection(float inputVal)
+    {
+        if (inputVal > 0)
+        {
+            return RotationDirection.Positive;
+        }
+        else if (inputVal < 0)
+        {
+            return RotationDirection.Negative;
+        }
+        else
+        {
+            return RotationDirection.None;
         }
     }
 

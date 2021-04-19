@@ -1,0 +1,75 @@
+{
+    "randomBox": {
+        "lesson_num": 0
+    },
+    "randomCube": {
+        "lesson_num": 0
+    },
+    "rewardGrip": {
+        "lesson_num": 0
+    },
+    "rewardReleaseInArea": {
+        "lesson_num": 0
+    },
+    "rewardFinish": {
+        "lesson_num": 0
+    },
+    "rewardCubeKnockedOff": {
+        "lesson_num": 0
+    },
+    "rewardCubeReleased": {
+        "lesson_num": 0
+    },
+    "rewardTime": {
+        "lesson_num": 0
+    },
+    "curriculumGrip": {
+        "lesson_num": 1
+    },
+    "TouchCubeMoveGail": {
+        "checkpoints": [
+            {
+                "steps": 865758,
+                "file_path": "results\\curriculumPocoAPoco\\TouchCubeMoveGail\\TouchCubeMoveGail-865758.onnx",
+                "reward": -1.034006205237942,
+                "creation_time": 1618406269.7493837
+            },
+            {
+                "steps": 999983,
+                "file_path": "results\\curriculumPocoAPoco\\TouchCubeMoveGail\\TouchCubeMoveGail-999983.onnx",
+                "reward": -0.962466503155298,
+                "creation_time": 1618407421.0604136
+            },
+            {
+                "steps": 1499964,
+                "file_path": "results\\curriculumPocoAPoco\\TouchCubeMoveGail\\TouchCubeMoveGail-1499964.onnx",
+                "reward": 1.3075634522463686,
+                "creation_time": 1618409379.874302
+            },
+            {
+                "steps": 1659372,
+                "file_path": "results\\curriculumPocoAPoco\\TouchCubeMoveGail\\TouchCubeMoveGail-1659372.onnx",
+                "reward": 0.8186988019081484,
+                "creation_time": 1618409980.4404516
+            },
+            {
+                "steps": 1999964,
+                "file_path": "results\\curriculumPocoAPoco\\TouchCubeMoveGail\\TouchCubeMoveGail-1999964.onnx",
+                "reward": 0.6197437565773726,
+                "creation_time": 1618411200.5321789
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1659372,
+            "file_path": "results\\curriculumPocoAPoco\\TouchCubeMoveGail.onnx",
+            "reward": 0.8186988019081484,
+            "creation_time": 1618409980.4404516
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.23.0",
+        "torch_version": "1.7.1+cu110",
+        "tensorflow_version": "2.4.1"
+    }
+}

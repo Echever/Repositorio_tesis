@@ -14,9 +14,6 @@ ScriptsOnlyBuild:
     - TablePositionRandomizer
     - TableTouchDetector
     - TargetTouchDetector
-    Unity.Barracuda.dll:
-    - Unity.Barracuda.NNModel
-    - Unity.Barracuda.NNModelData
     Unity.ML-Agents.Extensions.dll:
     - Unity.MLAgents.Extensions.Sensors.ArticulationBodySensorComponent
     Unity.ML-Agents.dll:
@@ -72,8 +69,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1730}
     - Class: 114
-      Script: {instanceID: 1898}
-    - Class: 114
       Script: {instanceID: 1964}
     - Class: 114
       Script: {instanceID: 2090}
@@ -101,8 +96,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 3368}
     - Class: 114
       Script: {instanceID: 3562}
-    - Class: 114
-      Script: {instanceID: 3632}
     - Class: 114
       Script: {instanceID: 3648}
     - Class: 115
@@ -294,7 +287,7 @@ ScriptsOnlyBuild:
     className: RigidBodySensorComponent
   - hash:
       serializedVersion: 2
-      Hash: 8d65df04565767ff6d10b864fc895285
+      Hash: 6e5236b531a1c9415a3c19946ab0577b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RobotMoveCubeAgent

@@ -15,6 +15,7 @@ public class RobotManualInput : MonoBehaviour
         {
             float inputVal = Input.GetAxis(robotController.joints[i].inputAxis);
             Debug.Log("He presionado " + inputVal);
+            
             if (Mathf.Abs(inputVal) > 0)
             {
                 
