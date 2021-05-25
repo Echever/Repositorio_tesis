@@ -1,6 +1,9 @@
 #if UNITY_2020_1_OR_NEWER
 using UnityEngine;
 using Unity.MLAgents.Sensors;
+using System.Collections;
+using System.Collections.Generic;
+using System;
 
 namespace Unity.MLAgents.Extensions.Sensors
 {
@@ -41,6 +44,7 @@ namespace Unity.MLAgents.Extensions.Sensors
                     poseExtractor.Bodies[i], Settings
                 );
             }
+            
             return new[] { numPoseObservations + numJointObservations };
         }
     }

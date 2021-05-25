@@ -11,11 +11,12 @@ using System.IO;
 
 public class RobotMoveCubeAgent : Agent
 {
+
+    //Elementos del entorno
     public GameObject endEffector;
     public GameObject cube;
     public GameObject robot;
     public GameObject table;
-    public GameObject wrist;
     public GameObject goal;
     public GameObject goalBox;
 
@@ -24,51 +25,49 @@ public class RobotMoveCubeAgent : Agent
     TableTouchDetector tableTouchDetector;
     PincherController pincherController;
    
-
+    //Variables del estado de la pieza
     bool cubeIsGripped = false;
     bool cubeIsReleased = false;
-    //TablePositionRandomizer tablePositionRandomizer;
 
+    //Variables sobre el entrenamiento del brazo robot, todas estas se configuran desde el 
+    //La aparicion del cubo es aleatoria
     [SerializeField]
     bool cubeIsRandom = false;
 
+    //Si estamos entrenando al brazo unicamente a agarrar el cubo
+    [SerializeField]
+    bool grabBoxCurriculum = true;
+
+    //Cual es la distancia maxima de aparicion del cubo
     [SerializeField]
     float distanciaMaximaActual;
 
-    [SerializeField]
-    float distanciaMaximaAnterior = 0;
-
+    //Al inicio de cada entorno se obtienen las recompensas del archivo yaml y se guardan en el objeto SaveRewards que está definido más abajo
     private SaveRewards rewards = new SaveRewards();
-
+    
+    //Posicion inicial del cubo
     private Vector3 cubeStartingpos;
 
-    private String path;
+    //Variables maximas y minimas para la normalizacion del cubo y el robot.
+    private float maxHandX = 0.6f;
+    private float minHandX = -0.6f;
+    private float maxHandZ = 0.6f;
+    private float minHandZ = -0.6f;
+    private float maxHandY = 0.7f;
+    private float minHandY = 0f;
 
+    private float maxCubeX = 0.9f;
+    private float minCubeX = -0.9f;
+    private float maxCubeZ = 0.6f;
+    private float minCubeZ = -0.6f;
+    private float maxCubeY = 1.5f;
+    private float minCubeY = 0.7f;
+
+
+
+    //Se llama la primera vez que se inicializa el entorno, se usa para cargar los valores de entorno del yaml
     public void Awake()
     {
-
-        /*
-        path = Application.dataPath + "/StreamingAssets";
-
-        if (File.Exists(path + "/rewards.json"))
-        {
-            Debug.Log("JSON EXISTS!");
-            string jsonRewardString = File.ReadAllText(path + "/rewards.json");
-
-            rewards = JsonUtility.FromJson<SaveRewards>(jsonRewardString);
-
-            Debug.Log("Box Random: " + rewards.randomBox);
-            Debug.Log("Cube Random: " + rewards.randomCube);
-            Debug.Log("rewardGrip " + rewards.rewardGrip);
-            Debug.Log("rewardReleaseInArea: " + rewards.rewardReleaseInArea);
-            Debug.Log("rewardFinish: " + rewards.rewardFinish);
-            Debug.Log("rewardCubeKnockedOff:  " + rewards.rewardCubeKnockedOff);
-            Debug.Log("rewardCubeReleased: " + rewards.rewardCubeReleased);
-            Debug.Log("rewardTime: " + rewards.rewardTime);
-
-            Debug.Log(jsonRewardString);
-        }
-        */
 
         
         if(Academy.Instance.EnvironmentParameters.GetWithDefault("randomBox", 0) == 0)
@@ -88,8 +87,18 @@ public class RobotMoveCubeAgent : Agent
         {
             cubeIsRandom = true;
         }
-        
-        
+
+        if (Academy.Instance.EnvironmentParameters.GetWithDefault("grabBoxCurriculum", 0) == 0)
+        {
+            grabBoxCurriculum = false;
+        }
+        else
+        {
+            grabBoxCurriculum = true;
+        }
+
+
+
 
         rewards.rewardGrip = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardGrip", 0);
         rewards.rewardReleaseInArea = Academy.Instance.EnvironmentParameters.GetWithDefault("rewardReleaseInArea", 0);
@@ -103,24 +112,30 @@ public class RobotMoveCubeAgent : Agent
         touchDetector = cube.GetComponent<TargetTouchDetector>();
         tableTouchDetector = table.GetComponent<TableTouchDetector>();
         pincherController = endEffector.GetComponent<PincherController>();
-        //tablePositionRandomizer = cube.GetComponent<TablePositionRandomizer>();
+        
     }
 
 
     // AGENT
 
+    //Se ejecuta al inicio de cada episodio
     public override void OnEpisodeBegin()
     {
+
+        //Si queremos la caja de destino es aleatoria se determina su posicion
         if (rewards.randomBox)
         {
             goalBox.transform.localPosition = new Vector3(Random.Range(-0.70f, -0.33f), goalBox.transform.localPosition.y, Random.Range(-0.25f, 0.26f));
 
         }
-        //goalBox.transform.localPosition = new Vector3(Random.Range(-0.70f, -0.33f), goalBox.transform.localPosition.y, Random.Range(-0.25f, 0.26f));
-
+        
+        //Se resetean los parametros del robot
+        //IMPORTANTE: La rotacion 0.0f es la ultima rotacion que ha sido guardada en el editor de unity
+        //TODO: Buscar los valores adecuados para el entenamiento por curriculum y que se modifiquen en ejecucion
         float[] defaultRotations = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
         robotController.StopAllJointRotations();
         robotController.ForceJointsToRotations(defaultRotations);
+        pincherController.ResetGripToOpen();
 
         cubeIsGripped = false;
         cubeIsReleased = false;
@@ -128,17 +143,17 @@ public class RobotMoveCubeAgent : Agent
         touchDetector.hasTouchedTarget = false;
         tableTouchDetector.hasTouchedTable = false;
 
-        Vector3 posicionIncialCubo = new Vector3(0.472f, 0.778f, -0.0396f);
-        distanciaMaximaActual = Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0.01f);
 
-       
+
+        Vector3 posicionIncialCubo = new Vector3(0.472f, 0.78f, -0.033f);
+        distanciaMaximaActual = Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0.11f);
 
 
         //Aleatorizacion de la pieza
         if (cubeIsRandom)
         {
             //Cambiar la generacion de la pieza 
-            if (Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) != 0)
+            if (true)
             {
                 //Si la distancia en X es mas que 0.18 el brazo no llega
                 if (distanciaMaximaActual > 0.18)
@@ -153,21 +168,18 @@ public class RobotMoveCubeAgent : Agent
         }
         else
         {
-            cubeStartingpos = new Vector3(0.472f, 0.778f, -0.0396f);
+            cubeStartingpos = posicionIncialCubo;
         }
 
         cube.transform.localPosition = cubeStartingpos;
 
+        //Rotacion de la pieza
+        float rotacionActual = Academy.Instance.EnvironmentParameters.GetWithDefault("rotation", 90f);
+        cube.transform.localRotation = Quaternion.Euler(0, Random.Range(-rotacionActual, rotacionActual), 0);
         
-
-        cube.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        //Eliminamos la velocidad de la pieza
         cube.GetComponent<Rigidbody>().velocity = Vector3.zero;
         
-        pincherController.ResetGripToOpen();
-
-       
-
-        //tablePositionRandomizer.Move();
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -178,93 +190,145 @@ public class RobotMoveCubeAgent : Agent
             return;
         }
 
-
+        //Observacion si la pieza está agarrada
         sensor.AddObservation(cubeIsGripped);
 
-
+        //Observacion del agarre de la pinza
+        sensor.AddObservation(pincherController.grip);
 
         if (!cubeIsGripped)
         {
-            // relative cube position
-            Vector3 cubePosition = cube.transform.position - robot.transform.position;
+            //sensor.AddObservation(cube.transform.rotation);
+            
+            //Observaciones de la rotacion de la pieza y la pinza
+            sensor.AddObservation(normalizarValor(cube.transform.rotation.eulerAngles.y, 360, 0));
+            sensor.AddObservation(normalizarValor(endEffector.transform.localRotation.eulerAngles.x, 360, 0));
+
+            // Posicion relativa a la pieza
+            Vector3 cubeNormalized;
+            cubeNormalized.x = normalizarValor(cube.transform.localPosition.x, maxCubeX, minCubeX);
+            cubeNormalized.y = normalizarValor(cube.transform.localPosition.y, maxCubeY, minCubeY);
+            cubeNormalized.z = normalizarValor(cube.transform.localPosition.z, maxCubeZ, minCubeZ);
+
+            Vector3 robotNormalized;
+            robotNormalized.x = normalizarValor(robot.transform.localPosition.x, maxCubeX, minCubeX);
+            robotNormalized.y = normalizarValor(robot.transform.localPosition.y, maxCubeY, minCubeY);
+            robotNormalized.z = normalizarValor(robot.transform.localPosition.z, maxCubeZ, minCubeZ);
+
+            Vector3 cubePosition = cubeNormalized - robotNormalized;
             sensor.AddObservation(cubePosition);
 
-            // relative end position
-            Vector3 endPosition = endEffector.transform.position - robot.transform.position;
+            // Posicion relativa de la pinza
+            Vector3 handNormalized;
+
+            Vector3 handpos = endEffector.transform.position - robot.transform.position;
+
+            handNormalized.x = normalizarValor(handpos.x, maxHandX, minHandX);
+            handNormalized.y = normalizarValor(handpos.y, maxHandY, minHandY);
+            handNormalized.z = normalizarValor(handpos.z, maxHandZ, minHandZ);
+
+
+            Vector3 endPosition = handNormalized - robotNormalized;
             sensor.AddObservation(endPosition);
             sensor.AddObservation(cubePosition - endPosition);
 
+            
+            //Posiciones de la caja
             sensor.AddObservation(Vector3.zero);
             sensor.AddObservation(Vector3.zero);
             sensor.AddObservation(Vector3.zero);
 
-            //Debug.Log("Cube pos: "+ cubePosition);
-            //Debug.Log("End pos: " + endPosition);
-            //Debug.Log("Relative end pos: " + (cubePosition - endPosition));
+           
         }
         else
         {
 
+            
+
+            sensor.AddObservation(cube.transform.rotation.eulerAngles.y);
+            sensor.AddObservation(endEffector.transform.localRotation.eulerAngles.x);
+
+            //Posiciones del cubo
             sensor.AddObservation(Vector3.zero);
             sensor.AddObservation(Vector3.zero);
             sensor.AddObservation(Vector3.zero);
 
-            // relative goal position
-            Vector3 goalPosition = goalBox.transform.position - robot.transform.position;
+            //Posicion relativa de la caja
+            Vector3 robotNormalized;
+
+            robotNormalized.x = normalizarValor(robot.transform.localPosition.x, maxCubeX, minCubeX);
+            robotNormalized.y = normalizarValor(robot.transform.localPosition.y, maxCubeY, minCubeY);
+            robotNormalized.z = normalizarValor(robot.transform.localPosition.z, maxCubeZ, minCubeZ);
+
+            Vector3 goalNormalized;
+            goalNormalized.x = normalizarValor(goal.transform.localPosition.x, maxCubeX, minCubeX);
+            goalNormalized.y = normalizarValor(goal.transform.localPosition.y, maxCubeY, minCubeY);
+            goalNormalized.z = normalizarValor(goal.transform.localPosition.z, maxCubeZ, minCubeZ);
+
+            Vector3 goalPosition = goalNormalized - robotNormalized;
             sensor.AddObservation(goalPosition);
 
-            // relative end position
-            Vector3 endPosition = endEffector.transform.position - robot.transform.position;
+
+            Vector3 handNormalized;
+
+            Vector3 handpos = endEffector.transform.position - robot.transform.position;
+
+            handNormalized.x = normalizarValor(handpos.x, maxHandX, minHandX);
+            handNormalized.y = normalizarValor(handpos.y, maxHandY, minHandY);
+            handNormalized.z = normalizarValor(handpos.z, maxHandZ, minHandZ);
+
+            // Posicion relativa de la pinza con la caja
+            Vector3 endPosition = handNormalized - robotNormalized;
             sensor.AddObservation(endPosition);
             sensor.AddObservation(goalPosition - endPosition);
 
-            //Debug.Log("Goal pos: "+ goalPosition);
-            //Debug.Log("End pos: " + endPosition);
-            //Debug.Log("Relative end pos" + (goalPosition - endPosition));
         }
 
-        
-        
-        
 
-        
+        //Observaciones del robot
+        sensor.AddObservation(normalizarRotacion(robotController.GetCurrentJointRotations()[0]));
+        sensor.AddObservation(normalizarRotacion(robotController.GetCurrentJointRotations()[1]));
+        sensor.AddObservation(normalizarRotacion(robotController.GetCurrentJointRotations()[2]));
+        sensor.AddObservation(normalizarRotacion(robotController.GetCurrentJointRotations()[3]));
+        sensor.AddObservation(normalizarRotacion(robotController.GetCurrentJointRotations()[4]));
+        sensor.AddObservation(normalizarRotacion(robotController.GetCurrentJointRotations()[5]));
+        sensor.AddObservation(normalizarRotacion(robotController.GetCurrentJointRotations()[6]));
+
+
+
+
     }
 
     public override void OnActionReceived(float[] vectorAction)
     {
-        // move RESTAMOS 2 POR QUE NO SON JOINTS
+        
+        // Movimiento del robot RESTAMOS 1 POR QUE NO SON JOINTS
         for (int jointIndex = 0; jointIndex < vectorAction.Length - 1; jointIndex++)
         {
             RotationDirection rotationDirection = ActionIndexToRotationDirection((int)vectorAction[jointIndex]);
             robotController.RotateJoint(jointIndex, rotationDirection, false);
         }
 
-        //pincher
-        float pincherInput = (int) vectorAction[7];
+        //Movimiento de la pinza
+        int pincherInput = (int) vectorAction[7];
         pincherController.gripState = GripStateForInput(pincherInput - 1);
 
-        /*
-        int handInput = (int) vectorAction[8];
-        robotController.RotateJoint(6, ActionIndexToRotationDirection(handInput), false);
-        */
-
-        //Debug.Log(endEffector.GetComponent<PincherController>().CurrentGraspCenter().ToString("F4"));
-
-        //if (cube.GetComponent<Collider>().bounds.Contains(endEffector.GetComponent<PincherController>().CurrentGraspCenter()) && pincherController.grip > 0.5f && pincherController.fingerA.GetComponent<FingerTouch>().isTouchingCube && pincherController.fingerB.GetComponent<FingerTouch>().isTouchingCube && cube.transform.localPosition.y > 0.8f && !cubeIsGripped)
-
-        if (cube.GetComponent<Collider>().bounds.Contains(endEffector.GetComponent<PincherController>().CurrentGraspCenter()) && pincherController.grip > 0.5f && pincherController.fingerA.GetComponent<FingerTouch>().isTouchingCube && pincherController.fingerB.GetComponent<FingerTouch>().isTouchingCube && cube.transform.localPosition.y > 0.8f && !cubeIsGripped)
+        //Si detectamos el agarre se da la recompensa y se activa el flag cubeIsGripped para que solo se de la recompensa una vez
+        if (estaAgarrado())
         {
             cubeIsGripped = true;
             Debug.Log("Cube Gripped");
+
             SetReward(rewards.rewardGrip);
 
+            //Una pequeña comprobacion para ver los agarres en zonas nuevas
             if (cube.transform.localPosition.x > (cubeStartingpos.x + distanciaMaximaActual - 0.01) || cube.transform.localPosition.x < (cubeStartingpos.x - distanciaMaximaActual + 0.01) && cube.transform.localPosition.z > (cubeStartingpos.z + distanciaMaximaActual - 0.01) || cube.transform.localPosition.z < (cubeStartingpos.z - distanciaMaximaActual + 0.01))
             {
                 Debug.Log("A");
             }
 
             //Si tenemos el curriculum activado esto va a hacer que al principio solo aprenda a agarrar el cubo, una vez pase de un cierto punto avanzará en el entrenamiento.
-            if(Academy.Instance.EnvironmentParameters.GetWithDefault("curriculumGrip", 0) != 0)
+            if (grabBoxCurriculum)
             {
                 Debug.Log("Estamos en curriculum, asi que reseteamos!");
                 EndEpisode();
@@ -274,35 +338,33 @@ public class RobotMoveCubeAgent : Agent
         
         
 
-        // Knocked the cube off the table
+        // Comprobaciones si el cubo se cae de la mesa
         if (cube.transform.position.y < 0.6f || cube.transform.localPosition.z < -0.9f || cube.transform.localPosition.z > 0.955f || cube.transform.localPosition.x < -0.92f || cube.transform.localPosition.x > 0.92f)
         {
             SetReward(rewards.rewardCubeKnockedOff);
             EndEpisode();
         }
 
-        //knocked the cube from starting position (Si el cubo es aleatorio esto no hace falta)
+        
+        //Comprobacion para ver si echa el cubo fuera de la zona inicial
+        /*
         if ((cube.transform.localPosition.z < (cubeStartingpos.z - 0.1f) || cube.transform.localPosition.z > (cubeStartingpos.z + 0.1f) || cube.transform.localPosition.x < (cubeStartingpos.x  - 0.1) || cube.transform.localPosition.x > (cubeStartingpos.x + 0.1)) && !cubeIsGripped)
         {
             SetReward(rewards.rewardCubeKnockedOff);
             EndEpisode();
         }
+        */
         
         
+        //Comprobar que la pieza se suelta dentro del area del cubo
 
+        //Se calcula lis limites, y si se suelta dentro de este area se da una recompensa
         float lowX = goalBox.transform.localPosition.x - (goal.GetComponent<MeshRenderer>().bounds.size.x / 2);
         float upX = goalBox.transform.localPosition.x + (goal.GetComponent<MeshRenderer>().bounds.size.x / 2);
         float lowZ = goalBox.transform.localPosition.z - (goal.GetComponent<MeshRenderer>().bounds.size.z / 2);
         float upZ = goalBox.transform.localPosition.z + (goal.GetComponent<MeshRenderer>().bounds.size.z / 2);
 
-        //Debug.Log("goalX" + goal.transform.localPosition.x);
-        //Debug.Log("goalZ" + goal.transform.localPosition.z);
-        //Debug.Log("lowX " + lowX);
-        //Debug.Log("upX " + upX);
-        //Debug.Log("lowZ " + lowZ);
-        //Debug.Log("upZ " + upZ);
-
-
+        
         if (!cubeIsReleased && cubeIsGripped && pincherController.grip < 0.4f && cube.transform.localPosition.x > lowX && cube.transform.localPosition.x < upX && cube.transform.localPosition.z > lowZ && cube.transform.localPosition.z < upZ)
         {
             Debug.Log("Cube released in the area! NUEVO");
@@ -310,17 +372,19 @@ public class RobotMoveCubeAgent : Agent
             SetReward(rewards.rewardReleaseInArea);
         }
 
-
+        //Comprobamos que el cubo ha tocado el area verde de la caja
         if (goal.GetComponent<Goal>().goal || cube.GetComponent<TargetTouchDetector>().hasTouchedTarget)
         {
             Debug.Log("Finished!");
             SetReward(rewards.rewardFinish);
             EndEpisode();
         }
+        
       
-
+        //Si se suelta el cubo y cae en la mesa se penaliza
         if (tableTouchDetector.hasTouchedTable)
         {
+            cubeIsGripped = false;
             SetReward(rewards.rewardCubeReleased);
             EndEpisode();
         }
@@ -329,6 +393,7 @@ public class RobotMoveCubeAgent : Agent
         
     }
 
+    // Controles manuales
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
@@ -375,8 +440,19 @@ public class RobotMoveCubeAgent : Agent
 
     }
 
-    // HELPERS
+    public bool estaAgarrado()
+    {
 
+        bool cuboEnPinza = cube.GetComponent<Collider>().bounds.Contains(endEffector.GetComponent<PincherController>().CurrentGraspCenter());
+        bool pinzasCerrandas = pincherController.grip > 0.5f;
+        bool collidersTocanPieza = pincherController.fingerA.GetComponent<FingerTouch>().isTouchingCube && pincherController.fingerB.GetComponent<FingerTouch>().isTouchingCube;
+        bool piezaEnElAire = cube.transform.localPosition.y > 0.8f;
+
+        return cuboEnPinza && pinzasCerrandas && collidersTocanPieza && piezaEnElAire && !cubeIsGripped;
+    }
+
+    // HELPERS
+    //Objeto para guardar recomensas
     public class SaveRewards
     {
         public bool randomBox = false;
@@ -391,13 +467,7 @@ public class RobotMoveCubeAgent : Agent
 
     }
 
-    public SaveRewards loadFromJson()
-    {
-        SaveRewards ret = new SaveRewards();
-
-        return ret;
-    }
-
+    //Direcciones
     static public RotationDirection ActionIndexToRotationDirection(int actionIndex)
     {
         return (RotationDirection)(actionIndex - 1);
@@ -433,6 +503,32 @@ public class RobotMoveCubeAgent : Agent
         {
             return RotationDirection.None;
         }
+    }
+
+    //Funciones para normalizar
+    public float normalizarValor(float valorRecibido, float valorMaximo, float valorMinimo)
+    {
+        float valorNormalizado;
+        
+        valorNormalizado = (valorRecibido - valorMinimo) / (valorMaximo - valorMinimo);
+        
+        return valorNormalizado;
+    }
+
+    public float normalizarRotacion(float valorRecibido)
+    {
+        float eliminarVueltas = valorRecibido % 360;
+        
+
+        if(eliminarVueltas < 0)
+        {
+            eliminarVueltas = Math.Abs(eliminarVueltas);
+            eliminarVueltas = 360 - eliminarVueltas;
+        }
+
+        float valorNormalizado = (eliminarVueltas - 0) / (360 - 0);
+    
+        return valorNormalizado;
     }
 
 

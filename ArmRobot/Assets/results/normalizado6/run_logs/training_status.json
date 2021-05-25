@@ -1,0 +1,78 @@
+{
+    "randomBox": {
+        "lesson_num": 0
+    },
+    "randomCube": {
+        "lesson_num": 0
+    },
+    "rewardGrip": {
+        "lesson_num": 0
+    },
+    "rewardReleaseInArea": {
+        "lesson_num": 0
+    },
+    "rewardFinish": {
+        "lesson_num": 0
+    },
+    "rewardCubeKnockedOff": {
+        "lesson_num": 0
+    },
+    "rewardCubeReleased": {
+        "lesson_num": 0
+    },
+    "rewardTime": {
+        "lesson_num": 0
+    },
+    "curriculumGrip": {
+        "lesson_num": 7
+    },
+    "rotation": {
+        "lesson_num": 0
+    },
+    "TouchCubeMoveGail": {
+        "checkpoints": [
+            {
+                "steps": 4999988,
+                "file_path": "results\\normalizado6\\TouchCubeMoveGail\\TouchCubeMoveGail-4999988.onnx",
+                "reward": 1.250435358407546,
+                "creation_time": 1619577381.9804144
+            },
+            {
+                "steps": 5499998,
+                "file_path": "results\\normalizado6\\TouchCubeMoveGail\\TouchCubeMoveGail-5499998.onnx",
+                "reward": 1.162317877945147,
+                "creation_time": 1619579211.561476
+            },
+            {
+                "steps": 5999993,
+                "file_path": "results\\normalizado6\\TouchCubeMoveGail\\TouchCubeMoveGail-5999993.onnx",
+                "reward": 1.2286979129396636,
+                "creation_time": 1619581055.895205
+            },
+            {
+                "steps": 6499994,
+                "file_path": "results\\normalizado6\\TouchCubeMoveGail\\TouchCubeMoveGail-6499994.onnx",
+                "reward": 1.2703666504886415,
+                "creation_time": 1619582901.988029
+            },
+            {
+                "steps": 6501275,
+                "file_path": "results\\normalizado6\\TouchCubeMoveGail\\TouchCubeMoveGail-6501275.onnx",
+                "reward": 1.2997774304904994,
+                "creation_time": 1619582966.8476174
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 6501275,
+            "file_path": "results\\normalizado6\\TouchCubeMoveGail.onnx",
+            "reward": 1.2997774304904994,
+            "creation_time": 1619582966.8476174
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.23.0",
+        "torch_version": "1.7.1+cu110",
+        "tensorflow_version": "2.4.1"
+    }
+}

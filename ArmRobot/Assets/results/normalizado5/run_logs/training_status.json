@@ -1,0 +1,54 @@
+{
+    "randomBox": {
+        "lesson_num": 0
+    },
+    "randomCube": {
+        "lesson_num": 0
+    },
+    "rewardGrip": {
+        "lesson_num": 0
+    },
+    "rewardReleaseInArea": {
+        "lesson_num": 0
+    },
+    "rewardFinish": {
+        "lesson_num": 0
+    },
+    "rewardCubeKnockedOff": {
+        "lesson_num": 0
+    },
+    "rewardCubeReleased": {
+        "lesson_num": 0
+    },
+    "rewardTime": {
+        "lesson_num": 0
+    },
+    "curriculumGrip": {
+        "lesson_num": 0
+    },
+    "rotation": {
+        "lesson_num": 0
+    },
+    "TouchCubeMoveGail": {
+        "checkpoints": [
+            {
+                "steps": 499993,
+                "file_path": "results\\normalizado5\\TouchCubeMoveGail\\TouchCubeMoveGail-499993.onnx",
+                "reward": -0.4176574686689389,
+                "creation_time": 1619554309.8184588
+            },
+            {
+                "steps": 999997,
+                "file_path": "results\\normalizado5\\TouchCubeMoveGail\\TouchCubeMoveGail-999997.onnx",
+                "reward": 0.5068800751223554,
+                "creation_time": 1619557250.8202918
+            }
+        ]
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.23.0",
+        "torch_version": "1.7.1+cu110",
+        "tensorflow_version": "2.4.1"
+    }
+}

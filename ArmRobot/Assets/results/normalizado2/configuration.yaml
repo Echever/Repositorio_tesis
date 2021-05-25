@@ -1,0 +1,378 @@
+default_settings: null
+behaviors:
+  TouchCubeMoveGail:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 1024
+      buffer_size: 10240
+      learning_rate: 0.0003
+      beta: 0.005
+      epsilon: 0.2
+      lambd: 0.95
+      num_epoch: 3
+      learning_rate_schedule: linear
+    network_settings:
+      normalize: true
+      hidden_units: 128
+      num_layers: 2
+      vis_encode_type: simple
+      memory: null
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+    init_path: null
+    keep_checkpoints: 5
+    checkpoint_interval: 500000
+    max_steps: 20000000
+    time_horizon: 64
+    summary_freq: 20000
+    threaded: true
+    self_play: null
+    behavioral_cloning: null
+    framework: pytorch
+env_settings:
+  env_path: null
+  env_args: null
+  base_port: 5005
+  num_envs: 1
+  seed: -1
+engine_settings:
+  width: 84
+  height: 84
+  quality_level: 5
+  time_scale: 20
+  target_frame_rate: -1
+  capture_frame_rate: 60
+  no_graphics: false
+environment_parameters:
+  randomBox:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9309
+          value: 0
+      name: randomBox
+      completion_criteria: null
+  randomCube:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9310
+          value: 1
+      name: randomCube
+      completion_criteria: null
+  rewardGrip:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9311
+          value: 2
+      name: rewardGrip
+      completion_criteria: null
+  rewardReleaseInArea:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9312
+          value: 4
+      name: rewardReleaseInArea
+      completion_criteria: null
+  rewardFinish:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9313
+          value: 1
+      name: rewardFinish
+      completion_criteria: null
+  rewardCubeKnockedOff:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9314
+          value: -1
+      name: rewardCubeKnockedOff
+      completion_criteria: null
+  rewardCubeReleased:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9315
+          value: -1
+      name: rewardCubeReleased
+      completion_criteria: null
+  rewardTime:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9316
+          value: -1
+      name: rewardTime
+      completion_criteria: null
+  curriculumGrip:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9317
+          value: 0.0
+      name: GripLesson0
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9318
+          value: 0.01
+      name: GripLesson1
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9319
+          value: 0.02
+      name: GripLesson2
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9320
+          value: 0.03
+      name: GripLesson3
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9321
+          value: 0.04
+      name: GripLesson4
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9322
+          value: 0.05
+      name: GripLesson5
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9323
+          value: 0.06
+      name: GripLesson6
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9324
+          value: 0.07
+      name: GripLesson7
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9325
+          value: 0.08
+      name: GripLesson8
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9326
+          value: 0.09
+      name: GripLesson9
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9327
+          value: 0.1
+      name: GripLesson10
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9328
+          value: 0.11
+      name: GripLesson11
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9329
+          value: 0.12
+      name: GripLesson12
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9330
+          value: 0.15
+      name: GripLesson13
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9331
+          value: 0.18
+      name: GripLesson14
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9332
+          value: 0.21
+      name: GripLesson15
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9333
+          value: 0.24
+      name: GripLesson16
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9334
+          value: 0.27
+      name: GripLesson17
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 9335
+          value: 0.3
+      name: GripLesson18
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+checkpoint_settings:
+  run_id: normalizado2
+  initialize_from: null
+  load_model: false
+  resume: false
+  force: true
+  train_model: false
+  inference: false
+debug: false

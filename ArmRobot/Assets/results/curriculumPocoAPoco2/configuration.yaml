@@ -51,7 +51,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1238
+          seed: 5057
           value: 0
       name: randomBox
       completion_criteria: null
@@ -60,7 +60,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1239
+          seed: 5058
           value: 1
       name: randomCube
       completion_criteria: null
@@ -69,7 +69,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1240
+          seed: 5059
           value: 2
       name: rewardGrip
       completion_criteria: null
@@ -78,7 +78,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1241
+          seed: 5060
           value: 4
       name: rewardReleaseInArea
       completion_criteria: null
@@ -87,7 +87,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1242
+          seed: 5061
           value: 1
       name: rewardFinish
       completion_criteria: null
@@ -96,7 +96,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1243
+          seed: 5062
           value: -1
       name: rewardCubeKnockedOff
       completion_criteria: null
@@ -105,7 +105,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1244
+          seed: 5063
           value: -1
       name: rewardCubeReleased
       completion_criteria: null
@@ -114,7 +114,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1245
+          seed: 5064
           value: -1
       name: rewardTime
       completion_criteria: null
@@ -123,8 +123,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1246
-          value: 0.01
+          seed: 5065
+          value: 0.21
       name: GripLesson1
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -136,7 +136,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1247
+          seed: 5066
           value: 0.02
       name: GripLesson2
       completion_criteria:
@@ -149,8 +149,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1248
-          value: 0.01
+          seed: 5067
+          value: 0.03
       name: GripLesson3
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -162,8 +162,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1249
-          value: 0.02
+          seed: 5068
+          value: 0.04
       name: GripLesson4
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -175,8 +175,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1250
-          value: 0.03
+          seed: 5069
+          value: 0.05
       name: GripLesson5
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -188,8 +188,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1251
-          value: 0.04
+          seed: 5070
+          value: 0.06
       name: GripLesson6
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -201,8 +201,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1252
-          value: 0.05
+          seed: 5071
+          value: 0.07
       name: GripLesson7
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -214,34 +214,21 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1253
-          value: 0.06
-      name: GripLesson8
-      completion_criteria:
-        behavior: TouchCubeMoveGail
-        measure: reward
-        min_lesson_length: 10000
-        signal_smoothing: true
-        threshold: 1.2
-        require_reset: false
-    - value:
-        sampler_type: constant
-        sampler_parameters:
-          seed: 1254
-          value: 0.07
-      name: GripLesson8
-      completion_criteria:
-        behavior: TouchCubeMoveGail
-        measure: reward
-        min_lesson_length: 10000
-        signal_smoothing: true
-        threshold: 1.2
-        require_reset: false
-    - value:
-        sampler_type: constant
-        sampler_parameters:
-          seed: 1255
+          seed: 5072
           value: 0.08
+      name: GripLesson8
+      completion_criteria:
+        behavior: TouchCubeMoveGail
+        measure: reward
+        min_lesson_length: 10000
+        signal_smoothing: true
+        threshold: 1.2
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 5073
+          value: 0.09
       name: GripLesson9
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -253,8 +240,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1256
-          value: 0.09
+          seed: 5074
+          value: 0.1
       name: GripLesson10
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -266,8 +253,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1257
-          value: 0.1
+          seed: 5075
+          value: 0.11
       name: GripLesson11
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -279,8 +266,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1258
-          value: 0.11
+          seed: 5076
+          value: 0.12
       name: GripLesson12
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -292,8 +279,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1259
-          value: 0.12
+          seed: 5077
+          value: 0.15
       name: GripLesson13
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -305,8 +292,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1260
-          value: 0.15
+          seed: 5078
+          value: 0.18
       name: GripLesson14
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -318,8 +305,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1261
-          value: 0.18
+          seed: 5079
+          value: 0.21
       name: GripLesson15
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -331,8 +318,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1262
-          value: 0.21
+          seed: 5080
+          value: 0.24
       name: GripLesson16
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -344,8 +331,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1263
-          value: 0.24
+          seed: 5081
+          value: 0.27
       name: GripLesson17
       completion_criteria:
         behavior: TouchCubeMoveGail
@@ -357,22 +344,9 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1264
-          value: 0.27
-      name: GripLesson18
-      completion_criteria:
-        behavior: TouchCubeMoveGail
-        measure: reward
-        min_lesson_length: 10000
-        signal_smoothing: true
-        threshold: 1.2
-        require_reset: false
-    - value:
-        sampler_type: constant
-        sampler_parameters:
-          seed: 1265
+          seed: 5082
           value: 0.3
-      name: GripLesson19
+      name: GripLesson18
       completion_criteria:
         behavior: TouchCubeMoveGail
         measure: reward

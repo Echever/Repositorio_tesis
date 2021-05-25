@@ -1,0 +1,69 @@
+{
+    "randomBox": {
+        "lesson_num": 0
+    },
+    "randomCube": {
+        "lesson_num": 0
+    },
+    "rewardGrip": {
+        "lesson_num": 0
+    },
+    "rewardReleaseInArea": {
+        "lesson_num": 0
+    },
+    "rewardFinish": {
+        "lesson_num": 0
+    },
+    "rewardCubeKnockedOff": {
+        "lesson_num": 0
+    },
+    "rewardCubeReleased": {
+        "lesson_num": 0
+    },
+    "rewardTime": {
+        "lesson_num": 0
+    },
+    "curriculumGrip": {
+        "lesson_num": 0
+    },
+    "TouchCubeMoveGail": {
+        "checkpoints": [
+            {
+                "steps": 999997,
+                "file_path": "results\\curriculumRotacion\\TouchCubeMoveGail\\TouchCubeMoveGail-999997.onnx",
+                "reward": -0.3626685705496949,
+                "creation_time": 1618931358.5591779
+            },
+            {
+                "steps": 1499996,
+                "file_path": "results\\curriculumRotacion\\TouchCubeMoveGail\\TouchCubeMoveGail-1499996.onnx",
+                "reward": -0.005985769701131412,
+                "creation_time": 1618933378.7546003
+            },
+            {
+                "steps": 1999985,
+                "file_path": "results\\curriculumRotacion\\TouchCubeMoveGail\\TouchCubeMoveGail-1999985.onnx",
+                "reward": -0.431804069796124,
+                "creation_time": 1618935825.8524578
+            },
+            {
+                "steps": 2499991,
+                "file_path": "results\\curriculumRotacion\\TouchCubeMoveGail\\TouchCubeMoveGail-2499991.onnx",
+                "reward": -0.4855416764815648,
+                "creation_time": 1618938007.0790873
+            },
+            {
+                "steps": 2999981,
+                "file_path": "results\\curriculumRotacion\\TouchCubeMoveGail\\TouchCubeMoveGail-2999981.onnx",
+                "reward": -0.1453992975693123,
+                "creation_time": 1618940164.846206
+            }
+        ]
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.23.0",
+        "torch_version": "1.7.1+cu110",
+        "tensorflow_version": "2.4.1"
+    }
+}

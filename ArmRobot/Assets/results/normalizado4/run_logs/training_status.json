@@ -1,0 +1,78 @@
+{
+    "randomBox": {
+        "lesson_num": 0
+    },
+    "randomCube": {
+        "lesson_num": 0
+    },
+    "rewardGrip": {
+        "lesson_num": 0
+    },
+    "rewardReleaseInArea": {
+        "lesson_num": 0
+    },
+    "rewardFinish": {
+        "lesson_num": 0
+    },
+    "rewardCubeKnockedOff": {
+        "lesson_num": 0
+    },
+    "rewardCubeReleased": {
+        "lesson_num": 0
+    },
+    "rewardTime": {
+        "lesson_num": 0
+    },
+    "curriculumGrip": {
+        "lesson_num": 7
+    },
+    "TouchCubeMoveGail": {
+        "checkpoints": [
+            {
+                "steps": 999993,
+                "file_path": "results\\normalizado4\\TouchCubeMoveGail\\TouchCubeMoveGail-999993.onnx",
+                "reward": -0.3395551280918519,
+                "creation_time": 1619539820.379187
+            },
+            {
+                "steps": 1499999,
+                "file_path": "results\\normalizado4\\TouchCubeMoveGail\\TouchCubeMoveGail-1499999.onnx",
+                "reward": 0.9661207131437353,
+                "creation_time": 1619541575.822064
+            },
+            {
+                "steps": 1999997,
+                "file_path": "results\\normalizado4\\TouchCubeMoveGail\\TouchCubeMoveGail-1999997.onnx",
+                "reward": 1.0830045203098164,
+                "creation_time": 1619543390.8762195
+            },
+            {
+                "steps": 0,
+                "file_path": "results\\normalizado4\\TouchCubeMoveGail\\TouchCubeMoveGail-0.onnx",
+                "reward": null,
+                "creation_time": 1619548541.5521996
+            },
+            {
+                "steps": 0,
+                "file_path": "results\\normalizado4\\TouchCubeMoveGail\\TouchCubeMoveGail-0.onnx",
+                "reward": null,
+                "creation_time": 1619548595.1930604
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 0,
+            "file_path": "results\\normalizado4\\TouchCubeMoveGail.onnx",
+            "reward": null,
+            "creation_time": 1619548595.1930604
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.23.0",
+        "torch_version": "1.7.1+cu110",
+        "tensorflow_version": "2.4.1"
+    },
+    "rotation": {
+        "lesson_num": 0
+    }
+}
